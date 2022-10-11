@@ -10,7 +10,7 @@ pygame.init()
 clock = pygame.time.Clock()
 
 # Game Window Initialization
-gameWindow = Window(1200,600)
+gameWindow = Window(1600,800)
 gameWindow.set_title("Space Invaders")
 gameWindow.gameDifficulty = 1
 
@@ -38,7 +38,7 @@ while (gameWindow):
 
     # Events Loop
     for event in pygame.event.get():
-        if event.type == QUIT:
+        if event.type == pygame.QUIT:
             sys.exit()
 
         if event.type == pygame.MOUSEBUTTONDOWN:
