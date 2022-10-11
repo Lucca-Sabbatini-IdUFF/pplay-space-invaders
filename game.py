@@ -1,4 +1,5 @@
 # Imports
+import sys
 import pygame
 from pygame.locals import *
 from src.pplay.window import *
@@ -32,12 +33,18 @@ while (gameWindow):
     # Get Next Screen
     currentScreen = currentScreen.screen
 
+    # Resets variable that sees if mouse is right clicking
     rightClicking = False
 
+    # Events Loop
     for event in pygame.event.get():
+        if event.type == QUIT:
+            sys.exit()
+
         if event.type == pygame.MOUSEBUTTONDOWN:
             if event.button == 1:
                 rightClicking = True
+
         if event.type == pygame.MOUSEBUTTONUP:
             if event.button == 1:
                 rightClicking = False
