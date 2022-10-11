@@ -16,7 +16,7 @@ class Game:
     def drawScreen(self):
         return
 
-    def loop(self):
+    def loop(self, click):
         self.drawScreen()
 
         if (self.keyboard.key_pressed("ESC")):
