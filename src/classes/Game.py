@@ -12,6 +12,7 @@ class Game:
 
     def __init__(self, window, mouse, keyboard):
         self.window = window
+        self.window.gameOver = False
         self.mouse = mouse
         self.keyboard = keyboard
         self.screen = self
@@ -20,7 +21,7 @@ class Game:
 
     def drawScreen(self):
         self.player.gameObject.draw()
-        self.monsterGrid.drawGrid()
+        self.monsterGrid.drawGrid(self.player.gameObject.y)
 
     def loop(self, click):
         self.drawScreen()
@@ -29,5 +30,5 @@ class Game:
         self.player.shotCooldownCheck(self.window.delta_time())
         self.monsterGrid.checkCollisions(self.player.shots)
 
-        if (self.keyboard.key_pressed("ESC")):
+        if (self.keyboard.key_pressed("ESC") or self.window.gameOver):
             self.screen = src.classes.MainMenu.MainMenu(self.window, self.mouse, self.keyboard)

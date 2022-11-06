@@ -21,6 +21,13 @@ class MonsterRow:
           if (i == monstersCount - 1 and rowParity == 1):
             continue
           if (i % 2 == rowParity):
-            self.monsters.append(src.classes.Monster.Monster(self.window, '{rowId}-{monsterId}'.format(rowId = self.id, monsterId = monsterIndex), ((i + 1) * monsterSpace - 49), yPosition, 200))
+            self.monsters.append(src.classes.Monster.Monster(self.window, '{rowId}-{monsterId}'.format(rowId = self.id, monsterId = monsterIndex), ((i + 1) * monsterSpace - 49), yPosition, 25))
             monsterIndex += 1
+
+    def moveDown(self, playerY):
+        for monster in self.monsters:
+            monster.moveDown()
             
+            if monster.gameObject.y + monster.gameObject.height >= playerY:
+                self.window.gameOver = True
+                return

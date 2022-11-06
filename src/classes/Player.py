@@ -29,9 +29,7 @@ class Player:
         self.xSpeed = self.absoluteSpeed
 
         self.shotSpeed = self.shotSpeed / self.window.gameDifficulty
-
-        print(self.shotCooldownAbsolute)
-
+        
     def control(self):        
         if (self.keyboard.key_pressed(self.shootLaserKeybind) and (self.shotCooldown == 0)):
             self.shoot()

@@ -6,6 +6,7 @@ class Monster:
     id = None
     absoluteSpeed = None
     ySpeed = None
+    orientation = True
 
     def __init__(self, window, id, xPosition, yPosition, initialSpeed):
         self.window = window
@@ -18,22 +19,34 @@ class Monster:
 
         self.absoluteSpeed = initialSpeed
         self.xSpeed = self.absoluteSpeed
-        self.ySpeed = self.absoluteSpeed
+        self.ySpeed = self.gameObject.height
     
     def moveDown(self):
-        self.gameObject.y += self.ySpeed * self.window.delta_time()
+        self.gameObject.y += self.ySpeed
 
         if (self.gameObject.y < self.window.height):
             return False
 
         return True
 
-    def moveLeft(self):
+    def moveLeft(self, orientation):
         self.gameObject.x -= self.xSpeed * self.window.delta_time()
-        if (self.gameObject.x < 20):
-            self.gameObject.x = 20
+        if (self.gameObject.x < 0):
+            self.gameObject.x = 0            
+            return not orientation 
+        return orientation 
 
-    def moveRight(self):
+    def moveRight(self, orientation):
         self.gameObject.x += self.xSpeed * self.window.delta_time()
-        if (self.gameObject.x > self.window.width - self.gameObject.width - 20):
-            self.gameObject.x = self.window.width - self.gameObject.width - 20
+        if (self.gameObject.x > self.window.width - self.gameObject.width):
+            self.gameObject.x = self.window.width - self.gameObject.width
+            return not orientation
+        return orientation       
+    
+    def move(self, orientation):
+        if orientation:
+            return self.moveRight(orientation)
+        elif not orientation:
+            return self.moveLeft(orientation)
+
+        
