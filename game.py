@@ -13,6 +13,7 @@ clock = pygame.time.Clock()
 gameWindow = Window(1600,800)
 gameWindow.set_title("Space Invaders")
 gameWindow.gameDifficulty = 1
+gameWindow.gameOver = False
 
 # Controls Initialization
 keyboard = gameWindow.get_keyboard()

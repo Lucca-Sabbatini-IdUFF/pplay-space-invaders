@@ -5,9 +5,11 @@ class MonsterGrid:
     window = None
     monsterRows = []
     orientation = True
+    score = None
 
-    def __init__(self, window):
+    def __init__(self, window, score):
         self.window = window
+        self.score = score
 
         monstersRowsCount = 3
         monsterSpace = 70
@@ -33,6 +35,8 @@ class MonsterGrid:
             for monster in row.monsters:
                 for shot in shots:
                     if (shot.gameObject.collided(monster.gameObject)):
+                        self.score.countPoints()
+
                         row.monsters.remove(monster)
                         del monster
 

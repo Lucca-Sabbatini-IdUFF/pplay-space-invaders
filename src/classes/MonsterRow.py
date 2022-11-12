@@ -7,13 +7,10 @@ class MonsterRow:
 
     def __init__(self, window, id, yPosition, rowParity):
         self.window = window
-    
         self.id = id
-
         self.yPosition = yPosition
 
-        monstersCount = math.floor((self.window.width) / 98)
-
+        monstersCount = math.floor((self.window.width) / 98) # Represents twice of the monster count
         monsterSpace = self.window.width / monstersCount
         monsterIndex = 0
 

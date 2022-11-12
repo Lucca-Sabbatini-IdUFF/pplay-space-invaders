@@ -2,18 +2,21 @@ import sys
 import src.classes.Button
 import src.classes.Game
 import src.classes.Difficulty
+import src.classes.Score
 
 class MainMenu:
     window = None
     mouse = None
     keyboard = None
     screen = None
+    score = None
 
     def __init__(self, window, mouse, keyboard):
         self.window = window
         self.mouse = mouse
         self.keyboard = keyboard
         self.screen = self
+        self.score = src.classes.Score.Score(self.window)
 
         self.title = src.pplay.sprite.Sprite("./assets/images/space_invaders_logo.png")
 
@@ -48,7 +51,7 @@ class MainMenu:
         self.drawScreen()
 
         if (self.mouse.is_over_object(self.playButton.gameObject) and clicked):
-            self.screen = src.classes.Game.Game(self.window, self.mouse, self.keyboard)
+            self.screen = src.classes.Game.Game(self.window, self.mouse, self.keyboard, self.score)
 
         if (self.mouse.is_over_object(self.difficultyButton.gameObject) and clicked):
             self.screen = src.classes.Difficulty.Difficulty(self.window, self.mouse, self.keyboard)
