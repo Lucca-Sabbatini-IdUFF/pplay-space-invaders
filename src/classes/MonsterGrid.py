@@ -1,15 +1,18 @@
-import math
 import src.classes.MonsterRow
+import src.classes.Laser
 
 class MonsterGrid:
-    window = None
-    monsterRows = []
-    orientation = True
-    score = None
+    shotSpeed = 600
 
-    def __init__(self, window, score):
+    def __init__(self, window, score, initialSpeed):
         self.window = window
         self.score = score
+        self.monsterRows = []
+        self.orientation = True
+
+        self.shotCooldownAbsolute = 0.6
+        self.shotCooldown = 0
+        self.shots = []
 
         monstersRowsCount = 3
         monsterSpace = 70
@@ -17,9 +20,20 @@ class MonsterGrid:
         rowParity = 0
 
         for i in range(monstersRowsCount):
-            self.monsterRows.append(src.classes.MonsterRow.MonsterRow(self.window, monsterRowIndex, (i + 1) * monsterSpace, rowParity))
+            self.monsterRows.append(src.classes.MonsterRow.MonsterRow(
+                self.window, monsterRowIndex, (i + 1) * monsterSpace, rowParity, initialSpeed))
             monsterRowIndex += 1
-            # rowParity = not rowParity # If uncommented, monster alignment is alternated
+            # rowParity = not rowParity  # If uncommented, monster alignment is alternated
+
+    def shoot(self):
+        self.shotCooldown = self.shotCooldownAbsolute
+        self.shots.append(src.classes.Laser.Laser(
+            self.window, self.shotSpeed, self))
+
+    def shotCooldownCheck(self, timePassed):
+        self.shotCooldown -= timePassed
+        if (self.shotCooldown < 0):
+            self.shotCooldown = 0
 
     def drawGrid(self, playerY):
         for row in self.monsterRows:
@@ -28,7 +42,7 @@ class MonsterGrid:
                 newOrientation = monster.move(self.orientation)
                 if newOrientation != self.orientation:
                     self.orientation = newOrientation
-                    row.moveDown(playerY)
+                    self.moveRowsDown(playerY)
 
     def checkCollisions(self, shots):
         for row in self.monsterRows:
@@ -43,3 +57,14 @@ class MonsterGrid:
                         shots.remove(shot)
                         del shot
 
+    def get_alive_monsters_count(self):
+        count = 0
+
+        for row in self.monsterRows:
+            count += len(row.monsters)
+
+        return count
+
+    def moveRowsDown(self, playerY):
+        for row in self.monsterRows:
+            row.moveDown(playerY)

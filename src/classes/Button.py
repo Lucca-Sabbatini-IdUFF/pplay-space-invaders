@@ -1,8 +1,7 @@
 from src.pplay.sprite import *
 
-class Button:
-    gameObject = None
 
+class Button:
     def __init__(self, assetPath, xPosition, yPosition):
         self.gameObject = Sprite(assetPath, 1)
         self.gameObject.x = xPosition

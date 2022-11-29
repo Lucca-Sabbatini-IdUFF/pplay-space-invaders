@@ -1,36 +1,36 @@
 from src.pplay.sprite import *
 import src.classes.Laser
 
+
 class Player:
-    window = None
-    keyboard = None
-    gameObject = None
     absoluteSpeed = 400
-    xSpeed = None
     moveLeftKeybind = "LEFT"
     moveRightKeybind = "RIGHT"
     shootLaserKeybind = "SPACE"
     shotSpeed = 600
-    shotCooldownAbsolute = None
-    shotCooldown = 0
-    shots = []
 
     def __init__(self, window, keyboard):
         self.window = window
         self.keyboard = keyboard
         self.gameObject = Sprite("./assets/images/player.png", 1)
+        self.lives = 3
 
-        self.shotCooldownAbsolute = 0.3 + (0.3 * self.window.gameDifficulty)
+        self.shotCooldownAbsolute = 0.6
+        self.shotCooldown = 0
+        self.shots = []
 
-        self.gameObject.x = (self.window.width / 2) - (self.gameObject.width / 2)
-        self.gameObject.y = (self.window.height) - (self.gameObject.height) - 20
+        self.gameObject.x = (self.window.width / 2) - \
+            (self.gameObject.width / 2)
+        self.gameObject.y = (self.window.height) - \
+            (self.gameObject.height) - 20
 
-        self.absoluteSpeed = self.absoluteSpeed / self.window.gameDifficulty
+        self.absoluteSpeed = self.absoluteSpeed
         self.xSpeed = self.absoluteSpeed
 
-        self.shotSpeed = self.shotSpeed / self.window.gameDifficulty
-        
-    def control(self):        
+    def take_hit(self):
+        self.lives -= 1
+
+    def control(self):
         if (self.keyboard.key_pressed(self.shootLaserKeybind) and (self.shotCooldown == 0)):
             self.shoot()
 
@@ -60,7 +60,8 @@ class Player:
 
     def shoot(self):
         self.shotCooldown = self.shotCooldownAbsolute
-        self.shots.append(src.classes.Laser.Laser(self.window, self.shotSpeed, self))
+        self.shots.append(src.classes.Laser.Laser(
+            self.window, self.shotSpeed, self))
 
     def shotCooldownCheck(self, timePassed):
         self.shotCooldown -= timePassed

@@ -2,7 +2,7 @@
 import sys
 import pygame
 from pygame.locals import *
-from src.pplay.window import *
+from src.pplay.window import Window
 import src.classes.MainMenu
 
 # Initializes pygame's modules
@@ -10,7 +10,7 @@ pygame.init()
 clock = pygame.time.Clock()
 
 # Game Window Initialization
-gameWindow = Window(1600,800)
+gameWindow = Window(1500, 700)
 gameWindow.set_title("Space Invaders")
 gameWindow.gameDifficulty = 1
 gameWindow.gameOver = False
@@ -18,24 +18,24 @@ gameWindow.gameOver = False
 # Controls Initialization
 keyboard = gameWindow.get_keyboard()
 mouse = gameWindow.get_mouse()
-rightClicking = False
+RIGHT_CLICKING = False
 
 # Initialize Screen
 currentScreen = src.classes.MainMenu.MainMenu(gameWindow, mouse, keyboard)
 
 # Game Loop
-while (gameWindow):
+while gameWindow:
     # Clean Background
     gameWindow.set_background_color((0, 0, 0))
-    
+
     # Current Screen Game Loop
-    currentScreen.loop(rightClicking)
+    currentScreen.loop(RIGHT_CLICKING)
 
     # Get Next Screen
     currentScreen = currentScreen.screen
 
     # Resets variable that sees if mouse is right clicking
-    rightClicking = False
+    RIGHT_CLICKING = False
 
     # Events Loop
     for event in pygame.event.get():
@@ -44,11 +44,11 @@ while (gameWindow):
 
         if event.type == pygame.MOUSEBUTTONDOWN:
             if event.button == 1:
-                rightClicking = True
+                RIGHT_CLICKING = True
 
         if event.type == pygame.MOUSEBUTTONUP:
             if event.button == 1:
-                rightClicking = False
+                RIGHT_CLICKING = False
 
     # Update Window
     gameWindow.update()
