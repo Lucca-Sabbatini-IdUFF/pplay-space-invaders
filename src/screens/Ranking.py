@@ -19,6 +19,18 @@ class Ranking:
     def draw_screen(self):
         self.title.draw()
 
+        for i in range(min(len(self.window.ranking), 5)):
+            self.window.draw_text(
+                f"Player: {self.window.ranking[i].get('name')} - Points: {self.window.ranking[i].get('points')}",
+                (self.window.width / 2) - 140,
+                (self.window.height / 5) + (40 * i),
+                20,
+                (255, 255, 255),
+                "Arial",
+                True,
+                False
+            )
+
     def loop(self, click):
         self.draw_screen()
 

@@ -8,9 +8,11 @@ class Laser:
         self.game_object = Sprite(
             f"./assets/images/laser_{color}.png", 1)
 
+        offset = -self.game_object.height if color == "red" else +self.game_object.height
+
         self.game_object.x = self.shooter.game_object.x + \
             (self.shooter.game_object.width / 2) - self.game_object.width / 2
-        self.game_object.y = self.shooter.game_object.y - self.game_object.height
+        self.game_object.y = self.shooter.game_object.y + offset
 
         self.absolute_speed = initial_speed
         self.x_speed = self.absolute_speed

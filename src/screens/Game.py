@@ -1,4 +1,6 @@
+import time
 import random
+import src.pplay.sprite
 import src.components.Button
 import src.classes.Player
 import src.classes.MonsterGrid
@@ -20,6 +22,13 @@ class Game:
         self.hud = src.components.HUD.HUD(self.window, self.player)
         self.monster_grid = src.classes.MonsterGrid.MonsterGrid(
             self.window, self.score)
+
+        self.game_over_title = src.pplay.sprite.Sprite(
+            "./assets/images/game_over_title.png")
+        self.game_over_title.x = (
+            self.window.width / 2) - (self.game_over_title.width / 2)
+        self.game_over_title.y = (self.window.height / 2) - \
+            (self.game_over_title.height / 2)
 
     def draw_screen(self):
         self.score.draw_score()
@@ -126,8 +135,26 @@ class Game:
             self.monster_grid = src.classes.MonsterGrid.MonsterGrid(
                 self.window, self.score)
 
+        # Return to menu
+        if self.keyboard.key_pressed("ESC"):
+            self.monster_grid = None
+            self.screen = src.screens.MainMenu.MainMenu(
+                self.window, self.mouse, self.keyboard)
+
         # Game Over
-        if (self.keyboard.key_pressed("ESC") or self.window.game_over):
+        if (self.window.game_over):
+            self.game_over_title.draw()
+
+            player_name = input("Enter your name: ")
+
+            self.window.ranking.append(
+                {"name": player_name, "points": self.score.score})
+
+            sorted_ranking = sorted(self.window.ranking,
+                                    key=lambda entry: entry["points"], reverse=True)
+
+            self.window.ranking = sorted_ranking
+
             self.window.game_over = False
             self.monster_grid = None
             self.screen = src.screens.MainMenu.MainMenu(

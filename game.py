@@ -28,6 +28,7 @@ game_window = Window(primary_monitor.width, primary_monitor.height)
 game_window.set_title("Space Invaders")
 game_window.game_difficulty = 3
 game_window.game_over = False
+game_window.ranking = []
 
 # Controls Initialization
 keyboard = game_window.get_keyboard()
