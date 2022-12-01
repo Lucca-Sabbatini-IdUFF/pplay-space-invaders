@@ -1,24 +1,27 @@
-from src.pplay.sprite import *
+from src.pplay.sprite import Sprite
 
 
 class Laser:
-    def __init__(self, window, initialSpeed, shooter):
+    def __init__(self, window, initial_speed, shooter, color):
         self.window = window
         self.shooter = shooter
-        self.gameObject = Sprite("./assets/images/laser_red.png", 1)
+        self.game_object = Sprite(
+            f"./assets/images/laser_{color}.png", 1)
 
-        self.gameObject.x = self.shooter.gameObject.x + \
-            (self.shooter.gameObject.width / 2) - self.gameObject.width / 2
-        self.gameObject.y = self.shooter.gameObject.y - self.gameObject.height
+        self.game_object.x = self.shooter.game_object.x + \
+            (self.shooter.game_object.width / 2) - self.game_object.width / 2
+        self.game_object.y = self.shooter.game_object.y - self.game_object.height
 
-        self.absoluteSpeed = initialSpeed
-        self.xSpeed = self.absoluteSpeed
-        self.ySpeed = self.absoluteSpeed
+        self.absolute_speed = initial_speed
+        self.x_speed = self.absolute_speed
+        self.y_speed = self.absolute_speed
 
-    def moveUp(self):
-        self.gameObject.y -= self.ySpeed * self.window.delta_time()
+    def move_up(self):
+        self.game_object.y -= self.y_speed * self.window.delta_time()
 
-        if (self.gameObject.y < 0):
-            return False
+        return self.game_object.y > 0
 
-        return True
+    def move_down(self):
+        self.game_object.y += self.y_speed * self.window.delta_time()
+
+        return self.game_object.y < self.window.height
