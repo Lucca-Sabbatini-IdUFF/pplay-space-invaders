@@ -109,8 +109,11 @@ class Game:
                     if shot.game_object.collided(monster.game_object):
                         self.score.count_points()
 
-                        row.monsters.remove(monster)
-                        del monster
+                        monster.take_hit()
+
+                        if monster.lives == 0:
+                            row.monsters.remove(monster)
+                            del monster
 
                         self.player.shots.remove(shot)
                         del shot

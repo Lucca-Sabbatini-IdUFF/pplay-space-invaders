@@ -1,9 +1,10 @@
 import math
+import random
 import src.classes.Monster
 
 
 class MonsterRow:
-    def __init__(self, window, row_index, y_position, row_parity):
+    def __init__(self, window, row_index, y_position, row_parity, is_boss_row):
         self.window = window
         self.y_position = y_position
         self.monsters = []
@@ -11,6 +12,7 @@ class MonsterRow:
 
         # Represents twice of the monster count
         monsters_count = math.floor((self.window.width) / 98)
+        boss_index = random.randint(1, (monsters_count / 2) - 1) * 2 if is_boss_row else -1
         monster_space = self.window.width / monsters_count
         monster_index = 0
 
@@ -19,7 +21,7 @@ class MonsterRow:
                 continue
             if i % 2 == row_parity:
                 self.monsters.append(src.classes.Monster.Monster(
-                    self.window, monster_index, ((i + 1) * monster_space - 49), y_position))
+                    self.window, monster_index, ((i + 1) * monster_space - 49), y_position, i == boss_index))
                 monster_index += 1
 
     def move_down(self, player_y):

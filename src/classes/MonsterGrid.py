@@ -22,11 +22,12 @@ class MonsterGrid:
 
         monster_space = 70
         row_parity = 0
+        boss_row = random.randint(0, self.monsters_rows_count - 1)
 
         for i in range(self.monsters_rows_count):
             y_position = (i + 1) * monster_space + (self.window.height / 10)
             self.monster_rows.append(src.classes.MonsterRow.MonsterRow(
-                self.window, i, y_position, row_parity))
+                self.window, i, y_position, row_parity, i == boss_row))
             # row_parity = not row_parity  # If uncommented, monster alignment is alternated
 
     def shoot(self, random_monster):

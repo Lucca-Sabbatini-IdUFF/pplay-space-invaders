@@ -24,7 +24,7 @@ def get_primary_monitor():
 
 # Game Window Initialization
 primary_monitor = get_primary_monitor()
-game_window = Window(primary_monitor.width, primary_monitor.height)
+game_window = Window(primary_monitor.width - 100, primary_monitor.height - 100)
 game_window.set_title("Space Invaders")
 game_window.game_difficulty = 3
 game_window.game_over = False
