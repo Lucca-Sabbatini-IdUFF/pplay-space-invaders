@@ -1,4 +1,5 @@
 import time
+import json
 import random
 import src.pplay.sprite
 import src.components.Button
@@ -52,6 +53,21 @@ class Game:
                 del shot
 
                 continue
+
+    def save_ranking(self):
+        player_name = input("Enter your name: ")
+
+        self.window.ranking.append(
+            {"name": player_name, "points": self.score.score})
+
+        sorted_ranking = sorted(self.window.ranking,
+                                key=lambda entry: entry["points"], reverse=True)
+
+        self.window.ranking = sorted_ranking
+
+        ranking_file = open("data/ranking.json", "w")
+        json.dump({ "ranking": sorted_ranking }, ranking_file)
+        ranking_file.close()
 
     def loop(self, click):
         #  Draw screen elements
@@ -147,17 +163,8 @@ class Game:
         # Game Over
         if (self.window.game_over):
             self.game_over_title.draw()
-
-            player_name = input("Enter your name: ")
-
-            self.window.ranking.append(
-                {"name": player_name, "points": self.score.score})
-
-            sorted_ranking = sorted(self.window.ranking,
-                                    key=lambda entry: entry["points"], reverse=True)
-
-            self.window.ranking = sorted_ranking
-
+            self.window.update()
+            self.save_ranking()
             self.window.game_over = False
             self.monster_grid = None
             self.screen = src.screens.MainMenu.MainMenu(

@@ -1,5 +1,6 @@
 # Imports
 import sys
+import json
 import pygame
 import src.screens.MainMenu
 from screeninfo import get_monitors
@@ -12,8 +13,6 @@ pygame.init()
 clock = pygame.time.Clock()
 
 # Get Primary Monitor
-
-
 def get_primary_monitor():
     for monitor in get_monitors():
         if monitor.is_primary:
@@ -28,7 +27,12 @@ game_window = Window(primary_monitor.width - 100, primary_monitor.height - 100)
 game_window.set_title("Space Invaders")
 game_window.game_difficulty = 3
 game_window.game_over = False
-game_window.ranking = []
+
+# Ranking Initialization
+ranking_file = open("data/ranking.json")
+ranking_data = json.load(ranking_file)
+ranking_file.close()
+game_window.ranking = ranking_data["ranking"]
 
 # Controls Initialization
 keyboard = game_window.get_keyboard()
